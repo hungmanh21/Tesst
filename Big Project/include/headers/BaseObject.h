@@ -20,9 +20,9 @@ public:
 
     SDL_Texture* GetObject() const { return p_object_; }
 
-    bool LoadImage(std::string filename, SDL_Renderer* screen);
+    bool LoadImage(std::string filename, SDL_Renderer * screen);
 
-    void Render(SDL_Renderer* des, const SDL_Rect* clip = nullptr);
+    void Render(SDL_Renderer * des, const SDL_Rect* clip = nullptr);
 
     void Free();
 
