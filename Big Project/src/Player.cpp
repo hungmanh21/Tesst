@@ -57,7 +57,8 @@ void Player :: Render(SDL_Renderer *renderer)
     playerPosition.x -= map_x_;
     playerPosition.y -= map_y_;
 
-    SDL_RenderCopy(renderer, playerTexture, &framePresent, &playerPosition);
+    //SDL_RenderCopy(renderer, playerTexture, &framePresent, &playerPosition);
+    SDL_RenderCopyF(renderer, playerTexture, &framePresent, &playerPosition);
 
     playerPosition.x += map_x_;
     playerPosition.y += map_y_;
@@ -70,7 +71,7 @@ void Player :: ChangeSprite(const int Direction, bool running)
         framePresent.y = framePresent.h * Direction; // chuyen huong
         
         frameTime ++;
-        if (frameTime == 5){
+        if (frameTime == 4){
             frameTime = 0;
             framePresent.x += framePresent.w;
         }
@@ -90,19 +91,19 @@ void Player :: HandleInputAction(SDL_Event events, SDL_Renderer *screen)
         {
         case SDLK_UP:
             ChangeSprite(SPRITE_UP, 1);
-            y_val_ = -STEP;
+            y_val_ -= STEP;
             break;
         case SDLK_DOWN:
             ChangeSprite( SPRITE_DOWN , 1);
-            y_val_ = +STEP;
+            y_val_ += STEP;
             break;
         case SDLK_LEFT:
             ChangeSprite( SPRITE_LEFT , 1);
-            x_val_ = -STEP;
+            x_val_ -= STEP;
             break;
         case SDLK_RIGHT:
             ChangeSprite( SPRITE_RIGHT , 1);
-            x_val_ = +STEP;
+            x_val_ += STEP;
             break;
         default:
             x_val_ = 0;
@@ -280,13 +281,13 @@ void Player::CheckToMap(Map& map_data)
     }
 }
 
-void Player::SetMapXY(const int map_x, const int map_y)
+void Player::SetMapXY(const double map_x, const double map_y)
 {
     map_x_ = map_x;
     map_y_ = map_y;
 }
 
-void Player::CenterEntityOnMap(Map& map_data, int& top_x, int& top_y)
+void Player::CenterEntityOnMap(Map& map_data, double& top_x, double& top_y)
 {
     // Ban do di chuyen khi nhan vat toi giua ban do
     if (playerPosition.x - (SCREEN_WIDTH / 2) > top_x)

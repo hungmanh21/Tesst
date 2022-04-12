@@ -31,8 +31,8 @@ public:
     void CheckToMap(Map& map_data);
 
     // dich map
-    void SetMapXY(const int map_x, const int map_y);
-    void CenterEntityOnMap(Map& map_data, int& top_x, int& top_y);
+    void SetMapXY(const double map_x, const double map_y);
+    void CenterEntityOnMap(Map& map_data, double& top_x, double& top_y);
 
     void HandleArrows(SDL_Renderer *screen);
 
@@ -41,7 +41,7 @@ private:
     int coin_count;
 
     SDL_Texture *playerTexture;
-    SDL_Rect playerPosition; // Rect nay present playerTexture
+    SDL_FRect playerPosition; // Rect nay present playerTexture
     int frameTime;
     SDL_Rect framePresent;
 
@@ -49,8 +49,8 @@ private:
     double x_val_, y_val_;
 
     // vi tri map
-    int map_x_;
-    int map_y_;
+    double map_x_;
+    double map_y_;
 
     std::vector<Arrow*> arrow_list;
 };

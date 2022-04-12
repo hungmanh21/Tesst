@@ -1,11 +1,12 @@
-#ifndef COMMONFUNCC_H_
-#define COMMONFUNCC_H_
+#ifndef COMMONFUNC_H_
+#define COMMONFUNC_H_
 
 #include <string>
 #include "SDL.h"
 #include "SDL_image.h"
 #include <iostream>
 #include <vector>
+#include "SDL_mixer.h"
 
 static SDL_Window* g_Window = nullptr;
 static SDL_Renderer* g_Screen = nullptr;
