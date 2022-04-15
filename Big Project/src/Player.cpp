@@ -113,46 +113,8 @@ void Player :: HandleInputAction(SDL_Event events, SDL_Renderer *screen)
     }
     else ChangeSprite(0, false);
 
-    if(events.type == SDL_MOUSEBUTTONDOWN)
-    {
-        if(events.button.button == SDL_BUTTON_LEFT)
-        {
-            Arrow* arrow = new Arrow();
-            arrow->LoadImage("Assets\\Player\\Arrow.png", screen);
-            arrow->SetRect(playerPosition.x + playerPosition.w - 20, playerPosition.y + playerPosition.h - 10);
-            arrow->Set_X_Val(15);
-            arrow->Set_is_move(true);
-
-            arrow_list.push_back(arrow);
-        }
-    }
 }
 
-void Player::HandleArrows(SDL_Renderer *screen)
-{
-    for (int i = 0; i < arrow_list.size(); i++)
-    {
-        Arrow* ar = arrow_list[i];
-        if(ar != nullptr)
-        {
-            if(ar->Get_is_move() == true)
-            {
-                ar->HandleArrow(SCREEN_WIDTH, SCREEN_HEIGHT);
-                ar->Render(screen);
-            }
-            else
-            {
-                arrow_list.erase(arrow_list.begin() + i);
-                if(ar != nullptr)
-                {
-                    delete ar;
-                    ar = nullptr;
-                }
-            }
-        }
-    }
-    
-}
 
 void Player::Free(){
     if (playerTexture != nullptr)

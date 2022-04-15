@@ -6,10 +6,9 @@
 #include "BaseObject.h"
 #include "Game_Map.h"
 #include "Player.h"
+#include "Player_Heart.h"
 
-BaseObject g_Background;
 
-Mix_Music *bg_music = nullptr;
 bool Init()
 {
     bool success = true;
@@ -22,18 +21,6 @@ bool Init()
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "3");
 
     g_Window = SDL_CreateWindow("SwordMan_Nhom19", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-    {
-        std::cerr << "Can't open audio" << std::endl;
-        return false;
-    }
-    bg_music = Mix_LoadMUS("Assets\\Music\\bg_music.mp3");
-    if(bg_music == nullptr)
-    {
-        std::cerr << "Can't load music" << std::endl;
-        return false;
-    }
     if(g_Window == NULL)
     {
         std::cerr << "Error: Load music failed" << std::endl;
@@ -60,23 +47,14 @@ bool Init()
     return success;
 }
 
-bool LoadBackground()
-{
-    bool res = g_Background.LoadImage("Assets/game_background.png", g_Screen);
-    return (res == true);
-}
 
 void Close(){
-    g_Background.Free();
     
     SDL_DestroyWindow(g_Window);
     g_Window = nullptr;
 
     SDL_DestroyRenderer(g_Screen);
     g_Screen = nullptr;
-
-    Mix_FreeMusic(bg_music);
-    bg_music = nullptr;
 
     IMG_Quit();
     SDL_Quit();
@@ -91,11 +69,6 @@ int main(int argc, char* args[]){
         return -1;
     }
 
-    if(LoadBackground() == false)
-    {
-        return -1;
-    }
-
     // map
     Game_Map game_map;
     game_map.LoadMap("Assets/Maps/map01.dat");
@@ -104,6 +77,9 @@ int main(int argc, char* args[]){
     // player
     Player player;
     player.LoadImg("Assets/Player/Player-Sprite.png", g_Screen);
+
+    PlayerHp player_hp;
+    player_hp.Init(g_Screen);
 
     // main loop
     bool is_quit = false;
@@ -123,12 +99,12 @@ int main(int argc, char* args[]){
             }
         }
 
-        // background music
-        if(Mix_PlayingMusic() == 0)
-        {
-            Mix_PlayMusic(bg_music, -1);
-        }
-        else if(Mix_PausedMusic()) Mix_ResumeMusic();
+        // // background music
+        // if(Mix_PlayingMusic() == 0)
+        // {
+        //     Mix_PlayMusic(bg_music, -1);
+        // }
+        // else if(Mix_PausedMusic()) Mix_ResumeMusic();
         // clear va load background
         SDL_SetRenderDrawColor(g_Screen, 255, 255, 255, 255);
         SDL_RenderClear(g_Screen);
@@ -145,11 +121,14 @@ int main(int argc, char* args[]){
         player.CheckToMap(map_data);
         player.CenterEntityOnMap(map_data, top_x, top_y);
 
-        player.HandleArrows(g_Screen);
-
         // Ve map
         game_map.SetMap(map_data);
         game_map.DrawMap(g_Screen);
+
+        SDL_Delay(1000);
+        player_hp.DecreaseHeart();
+
+        player_hp.Render(g_Screen);
 
         player.Render(g_Screen);
         

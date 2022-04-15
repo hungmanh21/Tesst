@@ -3,7 +3,6 @@
 #include "CommonFunc.h"
 #include "BaseObject.h"
 #include "Game_Map.h"
-#include "Arrow.h"
 
 const int SPRITE_DOWN = 0;
 const int SPRITE_LEFT = 1;
@@ -34,7 +33,6 @@ public:
     void SetMapXY(const double map_x, const double map_y);
     void CenterEntityOnMap(Map& map_data, double& top_x, double& top_y);
 
-    void HandleArrows(SDL_Renderer *screen);
 
     void IncreaseCoin() {coin_count++;}
 private:
@@ -52,6 +50,5 @@ private:
     double map_x_;
     double map_y_;
 
-    std::vector<Arrow*> arrow_list;
 };
 #endif
