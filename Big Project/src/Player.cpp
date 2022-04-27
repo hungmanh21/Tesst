@@ -58,6 +58,8 @@ bool Player ::LoadImg(std ::string filename, SDL_Renderer *screen)
 
     playerTexture = new_texture;
 
+    player_hp.Init(screen);
+
     return true;
 }
 
@@ -98,8 +100,14 @@ void Player :: Render(SDL_Renderer *renderer)
         SDL_RenderCopyEx(renderer, slashTexture, nullptr, &slash_Rect, angle, nullptr, SDL_FLIP_NONE);
         is_attack = false;
     }
+    else
+    {
+        slash_Rect.x = slash_Rect.y = 0;
+    }
     playerPosition.x += map_x_;
     playerPosition.y += map_y_;
+
+    player_hp.Render(renderer);
 }
 
 void Player :: ChangeSprite(const int Direction, bool running) // sau này sửa thành SDL Rect setclip
@@ -206,6 +214,12 @@ void Player::CheckToMap(Map &map_data)
                 map_data.tile[y2][x2] = 0;
                 IncreaseCoin();
             }
+            else if (map_data.tile[y1][x2] == HEART_TILE || map_data.tile[y2][x2] == HEART_TILE)
+            {
+                map_data.tile[y1][x2] = 0;
+                map_data.tile[y2][x2] = 0;
+                player_hp.InCreaseHeart();
+            }
             else if (map_data.tile[y1][x2] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE)
             {
                 playerPosition.x = x2 * TILE_SIZE;
@@ -221,7 +235,12 @@ void Player::CheckToMap(Map &map_data)
                 map_data.tile[y2][x1] = 0;
                 IncreaseCoin();
             }
-
+            else if (map_data.tile[y1][x1] == MONEY_TILE || map_data.tile[y2][x1] == MONEY_TILE)
+            {
+                map_data.tile[y1][x1] = 0;
+                map_data.tile[y2][x1] = 0;
+                player_hp.InCreaseHeart();
+            }
             else if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y2][x1] != BLANK_TILE)
             {
                 playerPosition.x = (x1 + 1) * TILE_SIZE;

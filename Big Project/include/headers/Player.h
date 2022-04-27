@@ -3,6 +3,7 @@
 #include "CommonFunc.h"
 #include "BaseObject.h"
 #include "Game_Map.h"
+#include "Player_Health.h"
 
 const int PLAYER_FRAME_NUM_H = 4;
 const int PLAYER_FRAME_NUM_W = 3;
@@ -63,5 +64,8 @@ private:
 
     // coin
     int coin_count;
+
+    // health
+    PlayerHp player_hp;
 };
 #endif

@@ -160,8 +160,6 @@ int main(int argc, char* args[]){
     Player player;
     player.LoadImg("Assets/Player/Player-Sprite.png", g_Screen);
 
-    PlayerHp player_hp;
-    player_hp.Init(g_Screen);
 
     vector<Enemy*> list_enemies = MakeEnemiesList();
 
@@ -205,8 +203,6 @@ int main(int argc, char* args[]){
         game_map.SetMap(map_data); // di chuyển map theo player
         game_map.DrawMap(g_Screen);
        
-        player_hp.Render(g_Screen);
-
         player.Render(g_Screen);
 
         for (int i = 0; i < list_enemies.size(); i++)

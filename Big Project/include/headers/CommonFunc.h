@@ -16,8 +16,9 @@ const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;  
 
-#define BLANK_TILE 0 // o trong
+#define BLANK_TILE 0 
 #define MONEY_TILE 27
+#define HEART_TILE 28
 #define TILE_SIZE 64
 
 #define MAX_MAP_X 85

@@ -2,7 +2,7 @@
 
 PlayerHp::PlayerHp()
 {
-    current_health = 5;
+    current_health = 2;
 
     health_pos.x = health_pos.y = 20;
     health_pos.w = health_pos.h = 0;
