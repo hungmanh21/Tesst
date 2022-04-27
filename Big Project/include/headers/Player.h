@@ -4,12 +4,14 @@
 #include "BaseObject.h"
 #include "Game_Map.h"
 
+const int PLAYER_FRAME_NUM_H = 4;
+const int PLAYER_FRAME_NUM_W = 3;
 const int SPRITE_DOWN = 0;
 const int SPRITE_LEFT = 1;
 const int SPRITE_RIGHT = 2;
 const int SPRITE_UP = 3;
-const int STEP = 10; 
-
+const int STEP = 6;
+const int ZOOM_SIZE_PLAYER = 2;
 class Player 
 {
 public:
@@ -30,25 +32,36 @@ public:
     void CheckToMap(Map& map_data);
 
     // dich map
-    void SetMapXY(const double map_x, const double map_y);
-    void CenterEntityOnMap(Map& map_data, double& top_x, double& top_y);
-
+    void SetMapXY(const int map_x, const int map_y);
+    void CenterEntityOnMap(Map& map_data, int& top_x, int& top_y);
 
     void IncreaseCoin() {coin_count++;}
+
+    SDL_Rect get_slash_Rect() const {return slash_Rect;}
+
+    SDL_Rect get_player_Rect() const {return playerPosition;}
+
 private:
-    int coin_count;
+    
 
     SDL_Texture *playerTexture;
-    SDL_FRect playerPosition; // Rect nay present playerTexture
+    SDL_Rect playerPosition; // Rect nay present playerTexture
     int frameTime;
     SDL_Rect framePresent;
 
-    // Xu ly va cham
     double x_val_, y_val_;
+    
+    // map
+    int map_x_;
+    int map_y_;
+    
+    // slash 
+    SDL_Rect slash_Rect;
+    SDL_Texture* slashTexture;
+    bool is_attack;
+    double angle;
 
-    // vi tri map
-    double map_x_;
-    double map_y_;
-
+    // coin
+    int coin_count;
 };
 #endif
