@@ -40,8 +40,6 @@ public:
 
     SDL_Rect get_slash_Rect() const {return slash_Rect;}
 
-    SDL_Rect get_player_Rect() const {return playerPosition;}
-
 private:
     
 

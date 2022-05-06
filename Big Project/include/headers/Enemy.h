@@ -13,7 +13,6 @@ int const ENEMY_STEP = 3;
 
 class Enemy : public BaseObject
 {
-
 public:
     Enemy();
     ~Enemy();

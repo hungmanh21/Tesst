@@ -81,13 +81,13 @@ void Player :: Render(SDL_Renderer *renderer)
         }
         else if(framePresent.y == framePresent.h * 2)
         {
-            slash_Rect.x = playerPosition.x + 45;
+            slash_Rect.x = playerPosition.x + 30;
             slash_Rect.y = playerPosition.y;
             angle = 0;
         }
         else if (framePresent.y == framePresent.h)
         {
-            slash_Rect.x = playerPosition.x - 45;
+            slash_Rect.x = playerPosition.x - 30;
             slash_Rect.y = playerPosition.y;
             angle = 180;
         }
@@ -235,12 +235,13 @@ void Player::CheckToMap(Map &map_data)
                 map_data.tile[y2][x1] = 0;
                 IncreaseCoin();
             }
-            else if (map_data.tile[y1][x1] == MONEY_TILE || map_data.tile[y2][x1] == MONEY_TILE)
+            else if (map_data.tile[y1][x1] == HEART_TILE || map_data.tile[y2][x1] == HEART_TILE)
             {
                 map_data.tile[y1][x1] = 0;
                 map_data.tile[y2][x1] = 0;
                 player_hp.InCreaseHeart();
             }
+
             else if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y2][x1] != BLANK_TILE)
             {
                 playerPosition.x = (x1 + 1) * TILE_SIZE;
@@ -266,6 +267,12 @@ void Player::CheckToMap(Map &map_data)
                 map_data.tile[y2][x2] = 0;
                 IncreaseCoin();
             }
+            else if (map_data.tile[y2][x1] == HEART_TILE || map_data.tile[y2][x2] == HEART_TILE)
+            {
+                map_data.tile[y2][x1] = 0;
+                map_data.tile[y2][x2] = 0;
+                player_hp.InCreaseHeart();
+            }
             else if (map_data.tile[y2][x1] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE)
             {
                 playerPosition.y = (y2)*TILE_SIZE;
@@ -280,6 +287,12 @@ void Player::CheckToMap(Map &map_data)
                 map_data.tile[y1][x1] = 0;
                 map_data.tile[y1][x2] = 0;
                 IncreaseCoin();
+            }
+            else if (map_data.tile[y1][x1] == HEART_TILE || map_data.tile[y1][x2] == HEART_TILE)
+            {
+                map_data.tile[y1][x1] = 0;
+                map_data.tile[y1][x2] = 0;
+                player_hp.InCreaseHeart();
             }
             else if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y1][x2] != BLANK_TILE)
             {

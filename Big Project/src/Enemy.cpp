@@ -8,7 +8,6 @@ Enemy :: Enemy(){
 
     frameTime = 0;
     frame_W = frame_H = 0;
-    
     // hiệu ứng di chuyển p2
     animation_a = animation_b = 0;
     input_type.left_ = false;

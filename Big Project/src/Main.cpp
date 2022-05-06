@@ -9,9 +9,19 @@
 #include "Player_Health.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "TextObject.h"
+#include "Menu.h"
+
 
 using namespace std;
+
 Mix_Music *bg_music = nullptr;
+
+// Font
+TTF_Font* font[kFonts];
+// 0. Arial
+// 1. Calligraphy/ Thu phap
+// 2. Pen brush/ but long net to
 
 bool Init()
 {
@@ -39,7 +49,7 @@ bool Init()
             std::cerr << "Can't open audio" << std::endl;
             return false;
         }
-        bg_music = Mix_LoadMUS("Assets\\Music\\bg_music.mp3");
+        bg_music = Mix_LoadMUS("Assets\\Music\\game_music.mp3");
         if(bg_music == nullptr)
         {
             std::cerr << "Can't load music" << std::endl;
@@ -59,6 +69,24 @@ bool Init()
             if( !IMG_Init(imgFlags)  && imgFlags)
             {
                 success = false;
+            }
+        }
+
+        // Khởi tạo đối tượng text
+        if(TTF_Init() == -1)
+        {
+            printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+            success = false;
+        }
+        
+        // Initilize font
+        font[0] = TTF_OpenFont("Assets\\font\\ArialCE.ttf", 30);
+        font[1] = TTF_OpenFont("Assets\\font\\VNI-Thu fap2.ttf", 30);
+        font[2] = TTF_OpenFont("Assets\\font\\Vbutlong.ttf", 70);
+        for (int i = 0; i < kFonts; i ++) {
+            if (font[i] == NULL) {
+                std::cerr << "Failed to initilize font" << std::endl;
+                return false;
             }
         }
     }
@@ -147,6 +175,7 @@ vector<Enemy*> MakeEnemiesList(){
 }
 
 int main(int argc, char* args[]){
+    Menu GameMenu;
     if(Init() == false)
     {
         return -1;
@@ -160,13 +189,24 @@ int main(int argc, char* args[]){
     Player player;
     player.LoadImg("Assets/Player/Player-Sprite.png", g_Screen);
 
-
+    // Enemies
     vector<Enemy*> list_enemies = MakeEnemiesList();
 
-
+    // Text
+    // Time -> Count Down
+    TextObject time_game;
+    
     // main loop
     bool is_quit = false;
     int top_x = 0, top_y = 0;
+
+    // Menu
+    GameMenu.Load(g_Screen);
+    int ret_menu = GameMenu.Show(g_Screen, font);
+    if (ret_menu == 1) {
+        is_quit = true;
+    }
+
     while(!is_quit)
     {
         // mingw32-make run
@@ -180,11 +220,11 @@ int main(int argc, char* args[]){
                 player.HandleInputAction(g_Event, g_Screen);
         }
         // Play background music
-        if(Mix_PlayingMusic() == 0)
-        {
-            Mix_PlayMusic(bg_music, -1);
-        }
-        else if(Mix_PausedMusic()) Mix_ResumeMusic();
+        // if(Mix_PlayingMusic() == 0)
+        // {
+        //     Mix_PlayMusic(bg_music, -1);
+        // }
+        // else if(Mix_PausedMusic()) Mix_ResumeMusic();
 
         // clear va load background
         SDL_SetRenderDrawColor(g_Screen, 255, 255, 255, 255);
@@ -203,8 +243,8 @@ int main(int argc, char* args[]){
         game_map.SetMap(map_data); // di chuyển map theo player
         game_map.DrawMap(g_Screen);
        
-        player.Render(g_Screen);
 
+        player.Render(g_Screen);
         for (int i = 0; i < list_enemies.size(); i++)
         { // BUG
             Enemy *p_enemy = list_enemies.at(i);
@@ -219,6 +259,7 @@ int main(int argc, char* args[]){
                 p_enemy->MakeBullet(g_Screen, SCREEN_WIDTH, SCREEN_HEIGHT, map_data_old); // bullet bắt đầu lấy rect_x
                 
                 p_enemy->Show(g_Screen); // vẽ enemy và bullet
+
             }
 
             SDL_Rect blade_Rect = player.get_slash_Rect();
@@ -230,9 +271,21 @@ int main(int argc, char* args[]){
                 p_enemy->Free();
                 list_enemies.erase(list_enemies.begin()+i);
             }
-            
         }
-
+        // Time
+        std::string str_time = "Time: ";
+        Uint32 time_val = SDL_GetTicks() / 1000;
+        Uint32 val_time = 300 - time_val;
+        if (val_time <= 0){
+            // message: game over
+        } else {
+            std::string str_val = std::to_string(val_time);
+            str_time += str_val;
+            time_game.Set(SCREEN_WIDTH - 200, 15, str_time, TextObject::WHITE_TEXT);
+    
+            time_game.LoadFromRenderText(font[0], g_Screen);
+            time_game.RenderText(g_Screen);
+        }
 
         // Cap nhat man hinh
         SDL_RenderPresent(g_Screen);

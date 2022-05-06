@@ -86,3 +86,8 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
  
   return false;
 }
+
+bool SDLCommonFunc::CheckFocusWithRect(const int& x, const int& y, const SDL_Rect& rect){
+  return (rect.x <= x && x < rect.x + rect.w && rect.y <= y && y <= rect.y + rect.h);
+}
+
