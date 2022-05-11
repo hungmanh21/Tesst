@@ -17,8 +17,6 @@ Bullet::~Bullet()
     Free();
 }
 
-
-
 bool Bullet ::LoadImgBullet(SDL_Renderer *screen)
 {
     bool ret = BaseObject::LoadImage("Assets/Bullets/bullet_moon_4frs.png", screen);
@@ -61,6 +59,16 @@ void Bullet ::Show(SDL_Renderer *des)
     SDL_Rect *currentClip = &frame_clip[frame_W];
     SDL_Rect renderQuad = {rect_.x, rect_.y, width_frame * ZOOM_SIZE_BULLET, height_frame * ZOOM_SIZE_BULLET};
     SDL_RenderCopy(des, p_object_, currentClip, &renderQuad);
+}
+
+SDL_Rect Bullet:: get_bullet_rect()
+{
+    SDL_Rect bullet_rect;
+    bullet_rect.x = rect_.x;
+    bullet_rect.y = rect_.y;
+    bullet_rect.w = width_frame*ZOOM_SIZE_BULLET;
+    bullet_rect.h = height_frame*ZOOM_SIZE_BULLET;
+    return bullet_rect;
 }
 
 void Bullet :: HandleMove(const int &x_border, const int &y_border){

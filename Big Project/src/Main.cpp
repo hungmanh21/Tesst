@@ -163,8 +163,8 @@ vector<Enemy*> MakeEnemiesList(){
             p_enemy->set_animation_pos(pos1, pos2);
             p_enemy->set_input_left(1);
             // p3 bullet
-            Bullet *p_bullet = new Bullet();
-            p_enemy->InitBullet(p_bullet, g_Screen);
+            // Bullet *p_bullet = new Bullet();
+            // p_enemy->InitBullet(p_bullet, g_Screen);
 
             list_enemies.push_back(p_enemy);
         }
@@ -262,6 +262,8 @@ int main(int argc, char* args[]){
 
             }
 
+
+            // va cham kiem vs enemy
             SDL_Rect blade_Rect = player.get_slash_Rect();
             SDL_Rect enemy_Rect = p_enemy->GetRect();
 
@@ -270,6 +272,34 @@ int main(int argc, char* args[]){
             {
                 p_enemy->Free();
                 list_enemies.erase(list_enemies.begin()+i);
+            }
+
+            // va cham dan vs player
+            std::vector<Bullet*> p_enemy_bullets = p_enemy->get_bullet_list();
+            for(int j = 0; j < p_enemy_bullets.size(); j++)
+            {
+                Bullet* temp_bullet = p_enemy_bullets.at(j);
+                if(temp_bullet != nullptr)
+                {
+                    SDL_Rect player_Rect = player.get_player_Rect();
+                    bool is_collied2 = SDLCommonFunc::CheckCollision(temp_bullet->get_bullet_rect(), player_Rect);
+                    if(is_collied2)
+                    {
+                        std::cerr << player_Rect.x << " " << player_Rect.y << " " << player_Rect.w << " " << player_Rect.h << std::endl;
+                        std::cerr << temp_bullet->get_bullet_rect().x << " " << temp_bullet->get_bullet_rect().y << " " << temp_bullet->get_bullet_rect().w << " " << temp_bullet->get_bullet_rect().w << std::endl << std::endl; 
+                        player.DecreaseHp();
+                        p_enemy->RemoveBullet(j);
+                        player.Set_Position(map_data.start_x + 128,map_data.start_y + 320);
+                        // p->enemy->InitBullet
+                        
+                    }
+                }
+            }
+
+            if(player.get_hp() <= 0)
+            {
+                is_quit = true;
+                break;
             }
         }
         // Time

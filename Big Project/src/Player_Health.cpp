@@ -2,7 +2,7 @@
 
 PlayerHp::PlayerHp()
 {
-    current_health = 2;
+    current_health = 5;
 
     health_pos.x = health_pos.y = 20;
     health_pos.w = health_pos.h = 0;
@@ -58,7 +58,7 @@ void PlayerHp::DecreaseHeart()
     if(current_health > 0) current_health--;
 }
 
-void PlayerHp::InCreaseHeart()
+void PlayerHp::IncreaseHeart()
 {
     if(current_health < 5) current_health++;
 }

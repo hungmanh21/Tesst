@@ -17,6 +17,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (top_a > top_b && top_a < bottom_b)
     {
+      std::cout << "1" << std::endl;
       return true;
     }
   }
@@ -25,6 +26,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (bottom_a > top_b && bottom_a < bottom_b)
     {
+      std::cout << "2" << std::endl;
       return true;
     }
   }
@@ -33,6 +35,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (top_a > top_b && top_a < bottom_b)
     {
+      std::cout << "3" << std::endl;
       return true;
     }
   }
@@ -41,6 +44,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (bottom_a > top_b && bottom_a < bottom_b)
     {
+      std::cout << "4" << std::endl;
       return true;
     }
   }
@@ -50,6 +54,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (top_b > top_a && top_b < bottom_a)
     {
+      std::cout << "5" << std::endl;
       return true;
     }
   }
@@ -58,6 +63,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (bottom_b > top_a && bottom_b < bottom_a)
     {
+      std::cout << "6" << std::endl;
       return true;
     }
   }
@@ -66,6 +72,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (top_b > top_a && top_b < bottom_a)
     {
+      std::cout << "7" << std::endl;
       return true;
     }
   }
@@ -74,6 +81,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
   {
     if (bottom_b > top_a && bottom_b < bottom_a)
     {
+      std::cout << "8" << std::endl;
       return true;
     }
   }
@@ -81,6 +89,7 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
    // Case 3: size object 1 = size object 2
   if (top_a == top_b && right_a == right_b && bottom_a == bottom_b)
   {
+    std::cout << "9" << std::endl;
     return true;
   }
  

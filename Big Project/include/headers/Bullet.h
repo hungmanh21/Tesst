@@ -45,6 +45,8 @@ public:
     int getBulletDir() const { return bullet_dir; }
     void HandleMove(const int & x_border, const int &y_border);
 
+    SDL_Rect get_bullet_rect();
+
 private:
     int x_val, y_val;
     bool is_moving;

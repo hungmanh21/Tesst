@@ -14,8 +14,10 @@ public:
 
     void Init(SDL_Renderer *renderer);
 
-    void InCreaseHeart();
+    void IncreaseHeart();
     void DecreaseHeart();
+
+    int get_current_hp() const { return current_health;}
 
 private:
     SDL_Rect health_rect;

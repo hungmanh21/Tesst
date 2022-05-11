@@ -170,13 +170,6 @@ void Player::Free(){
         SDL_DestroyTexture(playerTexture);
         playerPosition.x = playerPosition.y = playerPosition.w = playerPosition.h = 0;
     }
-
-
-    if (playerTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerTexture);
-        playerPosition.x = playerPosition.y = playerPosition.w = playerPosition.h = 0;
-    }
 }
 
 // // Xu ly va cham
@@ -208,17 +201,11 @@ void Player::CheckToMap(Map &map_data)
     {
         if (x_val_ > 0) // di sang phai
         {
-            if (map_data.tile[y1][x2] == MONEY_TILE || map_data.tile[y2][x2] == MONEY_TILE)
+            if (map_data.tile[y1][x2] == HEART_TILE || map_data.tile[y2][x2] == HEART_TILE)
             {
                 map_data.tile[y1][x2] = 0;
                 map_data.tile[y2][x2] = 0;
-                IncreaseCoin();
-            }
-            else if (map_data.tile[y1][x2] == HEART_TILE || map_data.tile[y2][x2] == HEART_TILE)
-            {
-                map_data.tile[y1][x2] = 0;
-                map_data.tile[y2][x2] = 0;
-                player_hp.InCreaseHeart();
+                IncreaseHp();
             }
             else if (map_data.tile[y1][x2] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE)
             {
@@ -229,17 +216,11 @@ void Player::CheckToMap(Map &map_data)
         }
         else if (x_val_ < 0)
         {
-            if (map_data.tile[y1][x1] == MONEY_TILE || map_data.tile[y2][x1] == MONEY_TILE)
+            if (map_data.tile[y1][x1] == HEART_TILE || map_data.tile[y2][x1] == HEART_TILE)
             {
                 map_data.tile[y1][x1] = 0;
                 map_data.tile[y2][x1] = 0;
-                IncreaseCoin();
-            }
-            else if (map_data.tile[y1][x1] == HEART_TILE || map_data.tile[y2][x1] == HEART_TILE)
-            {
-                map_data.tile[y1][x1] = 0;
-                map_data.tile[y2][x1] = 0;
-                player_hp.InCreaseHeart();
+                IncreaseHp();
             }
 
             else if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y2][x1] != BLANK_TILE)
@@ -261,17 +242,11 @@ void Player::CheckToMap(Map &map_data)
     {
         if (y_val_ > 0)
         {
-            if (map_data.tile[y2][x1] == MONEY_TILE || map_data.tile[y2][x2] == MONEY_TILE)
+            if (map_data.tile[y2][x1] == HEART_TILE || map_data.tile[y2][x2] == HEART_TILE)
             {
                 map_data.tile[y2][x1] = 0;
                 map_data.tile[y2][x2] = 0;
-                IncreaseCoin();
-            }
-            else if (map_data.tile[y2][x1] == HEART_TILE || map_data.tile[y2][x2] == HEART_TILE)
-            {
-                map_data.tile[y2][x1] = 0;
-                map_data.tile[y2][x2] = 0;
-                player_hp.InCreaseHeart();
+                IncreaseHp();
             }
             else if (map_data.tile[y2][x1] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE)
             {
@@ -282,17 +257,11 @@ void Player::CheckToMap(Map &map_data)
         }
         else if (y_val_ < 0)
         {
-            if (map_data.tile[y1][x1] == MONEY_TILE || map_data.tile[y1][x2] == MONEY_TILE)
+            if (map_data.tile[y1][x1] == HEART_TILE || map_data.tile[y1][x2] == HEART_TILE)
             {
                 map_data.tile[y1][x1] = 0;
                 map_data.tile[y1][x2] = 0;
-                IncreaseCoin();
-            }
-            else if (map_data.tile[y1][x1] == HEART_TILE || map_data.tile[y1][x2] == HEART_TILE)
-            {
-                map_data.tile[y1][x1] = 0;
-                map_data.tile[y1][x2] = 0;
-                player_hp.InCreaseHeart();
+                IncreaseHp();
             }
             else if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y1][x2] != BLANK_TILE)
             {

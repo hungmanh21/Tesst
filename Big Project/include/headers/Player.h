@@ -36,9 +36,16 @@ public:
     void SetMapXY(const int map_x, const int map_y);
     void CenterEntityOnMap(Map& map_data, int& top_x, int& top_y);
 
-    void IncreaseCoin() {coin_count++;}
+    void DecreaseHp() {player_hp.DecreaseHeart();}
+    void IncreaseHp() {player_hp.IncreaseHeart();}
 
     SDL_Rect get_slash_Rect() const {return slash_Rect;}
+
+    SDL_Rect get_player_Rect() const {return playerPosition;}
+    
+    void Set_Position(int x, int y) {playerPosition.x = x; playerPosition.y = y;}
+
+    int get_hp() const {return player_hp.get_current_hp();}
 
 private:
     
@@ -60,8 +67,6 @@ private:
     bool is_attack;
     double angle;
 
-    // coin
-    int coin_count;
 
     // health
     PlayerHp player_hp;

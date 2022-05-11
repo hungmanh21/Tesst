@@ -23,6 +23,8 @@ public:
         MOVE_IN_SPACE_ENEMY = 1,
     };
 
+    SDL_Rect get_enemy_Rect();
+
     void set_x_val(const double &xVal) { x_val = xVal; }
     void set_y_val(const double &yVal) { y_val = yVal; }
     void set_x_pos(const double &xpos) { x_pos = xpos; }
@@ -64,6 +66,8 @@ public:
     }
     void InitBullet(Bullet * p_bullet, SDL_Renderer *screen);
     void MakeBullet(SDL_Renderer *screen, const int &x_limit, const int &y_limit, Map &map_old);
+
+    void RemoveBullet(const int idx);
 
 private:
     int map_x, map_y;

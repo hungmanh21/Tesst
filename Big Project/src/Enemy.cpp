@@ -30,6 +30,15 @@ bool Enemy :: LoadImg(std :: string path, SDL_Renderer* screen){
     return ret;
 }
 
+SDL_Rect Enemy::get_enemy_Rect()
+{
+    SDL_Rect e_Rect;
+    e_Rect.w = width_frame*ZOOM_SIZE_ENEMY;
+    e_Rect.h = height_frame*ZOOM_SIZE_ENEMY;
+    e_Rect.x = x_pos;
+    e_Rect.y = y_pos;
+    return e_Rect; 
+}
 void Enemy :: set_clips(){
     if(width_frame > 0 && height_frame > 0){
         for (int i = 0; i < ENEMY_FRAME_NUM_H; i++) // 2
@@ -63,6 +72,9 @@ void Enemy :: Show(SDL_Renderer *des){
         frame_H = 1;
     }
     frameTime++;
+
+    rect_.x = x_pos - map_x;
+    rect_.y = y_pos - map_y;
 
     SDL_Rect *currentClip = &frame_clip[frame_H][frame_W];
     SDL_Rect renderQuad = {rect_.x, rect_.y, width_frame * ZOOM_SIZE_ENEMY, height_frame * ZOOM_SIZE_ENEMY};
@@ -218,10 +230,9 @@ void Enemy::InitBullet(Bullet *p_bullet, SDL_Renderer *screen){
 void Enemy :: MakeBullet(SDL_Renderer *screen, const int &x_limit, const int &y_limit, Map &map_old){
     // x_pos : vtri x voi full map
     // rect_x : vtri x voi gScreen
-    rect_.x = x_pos - map_x;
-    rect_.y = y_pos - map_y;
 
     int change_map_x = map_x - map_old.start_x;
+    int change_map_y = map_y - map_old.start_y;
     
     for (int i = 0; i < bullet_list.size(); i++)
     {
@@ -229,14 +240,14 @@ void Enemy :: MakeBullet(SDL_Renderer *screen, const int &x_limit, const int &y_
         if(p_bullet != NULL){
             if (p_bullet->get_is_moving()) // đạn đang bay
             {   
-                // pham vi dan, chua hieu lam
-                bullet_distance = rect_.x + width_frame * ZOOM_SIZE_ENEMY - p_bullet -> GetRect().x;
+                bullet_distance = rect_.x + width_frame* ZOOM_SIZE_ENEMY - p_bullet ->get_bullet_rect().x;
                 
                 if (abs(bullet_distance) < SCREEN_WIDTH / 4)
                 {
                     p_bullet->HandleMove(x_limit, y_limit);
                     // FIX THIS
-                    p_bullet->SetRect(p_bullet->GetRect().x - change_map_x, p_bullet->GetRect().y);
+                    // p_bullet->SetRect(p_bullet->get_bullet_rect().x - change_map_x, p_bullet->get_bullet_rect().y);
+                    //p_bullet->SetRect(rect_.x + 5, rect_.y + 5);
                     p_bullet->Show(screen);
                 }
                 else p_bullet->set_is_moving(false); 
@@ -252,4 +263,19 @@ void Enemy :: MakeBullet(SDL_Renderer *screen, const int &x_limit, const int &y_
         }
     }
     
-} 
+}
+
+void Enemy::RemoveBullet(const int idx)
+{
+    int size = bullet_list.size();
+    if(size > 0 && idx < size)
+    {
+        Bullet* e_bullet = bullet_list.at(idx);
+        bullet_list.erase(bullet_list.begin()+idx);
+        if(e_bullet != nullptr)
+        {
+            delete e_bullet;
+            e_bullet = nullptr;
+        }
+    }
+}
